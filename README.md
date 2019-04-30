@@ -8,6 +8,8 @@ This situation has lasted for hundreds of thousands of generations. Everyone sho
 
 ![img](./docs/sample.png)
 
+# Usage
+
 ```sh
 # Install the requirements
 $ pip3 install numpy scikit-image
@@ -23,6 +25,12 @@ Wait a few hours, you will get 3000 images, each closer to the firefox icon.
 The principle is on my personal blog: [http://accu.cc/content/daze/ga/evolve/](http://accu.cc/content/daze/ga/evolve/). The article is in Chinese, and I am very sorry that there are no other languages available.
 
 But simply put, I used Genetic-Algorithms.
+
+# Why tiga?
+
+Tiga means 3, Ti-(G)enetic-(A)lgorithms. Or: Ultraman Tiga!
+
+![img](./docs/tiga.jpg)
 
 # Licences
 
