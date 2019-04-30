@@ -10,7 +10,7 @@ This situation has lasted for hundreds of thousands of generations. Everyone sho
 
 ```sh
 # Install the requirements
-$ pip3 install numpy skimage
+$ pip3 install numpy scikit-image
 
 # Run with arguments [Control image path] [Output dir]
 $ python3 tiga.py firefox.png /tmp/img
