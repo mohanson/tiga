@@ -1,4 +1,4 @@
-# tiga
+# Tiga
 
 This is a true story.
 
@@ -7,3 +7,23 @@ Once upon a time there were a group of scallops on the coast that lived and pros
 This situation has lasted for hundreds of thousands of generations. Everyone should have guessed what happened to the scallops: their shells are printed with patterns resembling Firefox icons.
 
 ![img](./docs/sample.png)
+
+```sh
+# Install the requirements
+$ pip3 install numpy skimage
+
+# Run with arguments [Control image path] [Output dir]
+$ python3 tiga.py firefox.png /tmp/img
+```
+
+Wait a few hours, you will get 3000 images, each closer to the firefox icon.
+
+# How does it works?
+
+The principle is on my personal blog: [http://accu.cc/content/daze/ga/evolve/](http://accu.cc/content/daze/ga/evolve/). The article is in Chinese, and I am very sorry that there are no other languages available.
+
+But simply put, I used Genetic-Algorithms.
+
+# Licences
+
+WTFPL
