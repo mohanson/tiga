@@ -2,7 +2,7 @@
 
 Use 100 triangles to generate any images you want.
 
-![img](./res/sample.png)
+![img](./res/firefox_out.png)
 
 # Usage
 
@@ -40,12 +40,6 @@ optional arguments:
 The principle is on my personal blog: [http://accu.cc/content/daze/ga/evolve/](http://accu.cc/content/daze/ga/evolve/). The article is in Chinese, and I am very sorry that there are no other languages available.
 
 But simply put, I used Genetic-Algorithms.
-
-# Why tiga?
-
-Tiga means 3, Ti-(G)enetic-(A)lgorithms. Or: Ultraman Tiga!
-
-![img](./res/tiga.jpg)
 
 # Licences
 
