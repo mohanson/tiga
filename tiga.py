@@ -26,19 +26,27 @@ class Gene:
 
 
 class GA:
-    def __init__(self, control_im_path):
-        self.pop_size = 80
-        self.dna_size = 100
-        self.max_iter = 3000
-        self.pc = 0.6
-        self.pm = 0.008
+    def __init__(self,
+                 control_im_path: str,
+                 pop_size: int,
+                 dna_size: int,
+                 max_iter: int,
+                 pc: float,
+                 pm: float,
+                 im_size: tuple,
+                 ):
+        self.pop_size = pop_size
+        self.dna_size = dna_size
+        self.max_iter = max_iter
+        self.pc = pc
+        self.pm = pm
 
         im = skimage.io.imread(control_im_path)
         if im.shape[2] == 4:
             im = skimage.color.rgba2rgb(im)
             im = (255 * im).astype(np.uint8)
         self.control_im = skimage.transform.resize(
-            im, (128, 128), mode='reflect', preserve_range=True).astype(np.uint8)
+            im, im_size, mode='reflect', preserve_range=True).astype(np.uint8)
 
     def decode(self, per):
         im = np.ones(self.control_im.shape, dtype=np.uint8) * 255
@@ -50,10 +58,7 @@ class GA:
     def perfit(self, per):
         im = self.decode(per)
         assert im.shape == self.control_im.shape
-        # 三维矩阵的欧式距离
         d = np.linalg.norm(np.where(self.control_im > im, self.control_im - im, im - self.control_im))
-        # 使用一个较大的数减去欧式距离
-        # 此处该数为 (self.control_im.size * ((3 * 255 ** 2) ** 0.5) ** 2) ** 0.5
         return (self.control_im.size * 195075) ** 0.5 - d
 
     def getfit(self, pop):
@@ -138,11 +143,26 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('control_im_path')
     parser.add_argument('save_dir')
+    parser.add_argument('--pop_size', type=int, default=80, help='population size')
+    parser.add_argument('--dna_size', type=int, default=100, help='dna size')
+    parser.add_argument('--max_iter', type=int, default=3000, help='population iterations')
+    parser.add_argument('--pc', type=float, default=0.6, help='genetic crossover probability')
+    parser.add_argument('--pm', type=float, default=0.008, help='genetic mutation probability')
+    parser.add_argument('--im_size', type=str, default='128x128', help='size, default 128x128')
     args = parser.parse_args()
 
-    os.makedirs(args.save_dir, exist_ok=True)
+    if not os.path.exists(args.save_dir):
+        os.makedirs(args.save_dir)
 
-    ga = GA(args.control_im_path)
+    ga = GA(
+        args.control_im_path,
+        args.pop_size,
+        args.dna_size,
+        args.max_iter,
+        args.pc,
+        args.pm,
+        [int(e) for e in args.im_size.split('x')],
+    )
     for i, (pop, fit) in enumerate(ga.optret(ga.evolve)()):
         j = np.argmax(fit)
         per = pop[j]
