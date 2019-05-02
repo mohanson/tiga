@@ -45,8 +45,11 @@ class GA:
         if im.shape[2] == 4:
             im = skimage.color.rgba2rgb(im)
             im = (255 * im).astype(np.uint8)
-        self.control_im = skimage.transform.resize(
-            im, im_size, mode='reflect', preserve_range=True).astype(np.uint8)
+        if im_size:
+            self.control_im = skimage.transform.resize(
+                im, im_size, mode='reflect', preserve_range=True).astype(np.uint8)
+        else:
+            self.control_im = im
 
     def decode(self, per):
         im = np.ones(self.control_im.shape, dtype=np.uint8) * 255
@@ -72,8 +75,8 @@ class GA:
         for _ in range(self.pop_size):
             per = Gene()
             for _ in range(self.dna_size):
-                r = np.random.randint(0, self.control_im.shape[0], 3, dtype=np.uint8)
-                c = np.random.randint(0, self.control_im.shape[1], 3, dtype=np.uint8)
+                r = np.random.randint(0, self.control_im.shape[0], 3, dtype=np.uint16)
+                c = np.random.randint(0, self.control_im.shape[1], 3, dtype=np.uint16)
                 color = np.random.randint(0, 256, 3)
                 alpha = np.random.random() * 0.45
                 per.base.append(Base(r, c, color, alpha))
@@ -120,8 +123,8 @@ class GA:
         for per in pop:
             for base in per.base:
                 if np.random.random() < self.pm:
-                    base.r = np.random.randint(0, self.control_im.shape[0], 3, dtype=np.uint8)
-                    base.c = np.random.randint(0, self.control_im.shape[1], 3, dtype=np.uint8)
+                    base.r = np.random.randint(0, self.control_im.shape[0], 3, dtype=np.uint16)
+                    base.c = np.random.randint(0, self.control_im.shape[1], 3, dtype=np.uint16)
                     base.color = np.random.randint(0, 256, 3)
                     base.alpha = np.random.random() * 0.45
         return pop
@@ -148,11 +151,16 @@ def main():
     parser.add_argument('--max_iter', type=int, default=3000, help='population iterations')
     parser.add_argument('--pc', type=float, default=0.6, help='genetic crossover probability')
     parser.add_argument('--pm', type=float, default=0.008, help='genetic mutation probability')
-    parser.add_argument('--im_size', type=str, default='128x128', help='size, default 128x128')
+    parser.add_argument('--im_size', type=str, help='size, [rows]x[cols]')
     args = parser.parse_args()
 
     if not os.path.exists(args.save_dir):
         os.makedirs(args.save_dir)
+
+    if args.im_size:
+        im_size = [int(e) for e in args.im_size.split('x')]
+    else:
+        im_size = None
 
     ga = GA(
         args.control_im_path,
@@ -161,7 +169,7 @@ def main():
         args.max_iter,
         args.pc,
         args.pm,
-        [int(e) for e in args.im_size.split('x')],
+        im_size,
     )
     for i, (pop, fit) in enumerate(ga.optret(ga.evolve)()):
         j = np.argmax(fit)
