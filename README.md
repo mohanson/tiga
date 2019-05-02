@@ -32,7 +32,7 @@ optional arguments:
   --max_iter MAX_ITER  population iterations
   --pc PC              genetic crossover probability
   --pm PM              genetic mutation probability
-  --im_size IM_SIZE    size, default 128x128
+  --im_size IM_SIZE    size, [rows]x[cols]
 ```
 
 # How does it works?
