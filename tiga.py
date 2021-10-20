@@ -175,7 +175,7 @@ def main():
         j = np.argmax(fit)
         per = pop[j]
         per_fit = ga.perfit(per)
-        print(f'{i:0>5} {per_fit}')
+        print(f'{i:0>5} {per_fit}', flush=True)
         skimage.io.imsave(os.path.join(args.save_dir, f'{i:0>5}.jpg'), ga.decode(per))
 
 
