@@ -37,7 +37,7 @@ optional arguments:
 
 # How does it works?
 
-The principle is on my personal blog: [http://accu.cc/content/daze/ga/evolve/](http://accu.cc/content/daze/ga/evolve/). The article is in Chinese, and I am very sorry that there are no other languages available.
+The principle is on my personal blog: [http://accu.cc/content/ga/evolve/](http://accu.cc/content/ga/evolve/). The article is in Chinese, and I am very sorry that there are no other languages available.
 
 But simply put, I used Genetic-Algorithms.
 
